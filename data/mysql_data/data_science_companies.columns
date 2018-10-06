@@ -1,0 +1,7 @@
+"name","type"
+"index","TEXT"
+"position","TEXT"
+"company","TEXT"
+"key_words","TEXT"
+"city","TEXT"
+"state","TEXT"

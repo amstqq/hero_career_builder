@@ -1,0 +1,4 @@
+"name","type"
+"index","TEXT"
+"word","TEXT"
+"frequency","TEXT"
