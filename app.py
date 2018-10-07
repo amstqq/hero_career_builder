@@ -23,7 +23,7 @@ app.config['JSON_SORT_KEYS'] = False
 #################################################
 
 Base = automap_base()
-engine = create_engine('mysql://root:root@localhost:3306/datascience')
+engine = create_engine('mysql://bf4f46f03975bb:ebe471b4@us-cdbr-iron-east-01.cleardb.net/heroku_b510522658f3a23')
 Base.prepare(engine, reflect=True)
 conn = engine.connect()
 session = Session(bind=engine)
