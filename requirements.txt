@@ -6,7 +6,6 @@ geojson==2.4.0
 get==1.0.3
 gmaps==0.8.0
 greenlet==0.4.12
-jsonschema==2.6.0lxml==4.1.1
 Markdown==2.6.11
 MarkupSafe==1.0
 matplotlib==2.1.2
