@@ -1,4 +1,7 @@
 # Perfect Career Builder
+
+This app is deployed at [https://perfectcareerbuilder.herokuapp.com](https://perfectcareerbuilder.herokuapp.com).
+
 ## Introduction: 
 What is data science, and what do data scientists do? More importantly, how do I get a job in data science? 
   
