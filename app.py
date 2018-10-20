@@ -1,5 +1,5 @@
 import os
-from config import *
+# from config import *
 
 import pandas as pd
 import numpy as np
@@ -17,6 +17,8 @@ from flask import Flask, jsonify, request, make_response, url_for, render_templa
 from flask_sqlalchemy import SQLAlchemy
 pymysql.install_as_MySQLdb()
 
+dbconfig = os.environ.get('CLEARDB_DATABASE_URL',None)
+
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 
@@ -26,7 +28,8 @@ app.config['JSON_SORT_KEYS'] = False
 #################################################
 
 Base = automap_base()
-engine = create_engine(f"mysql://{username}:{password}@{host}/{database}")
+# engine = create_engine(f"mysql://{username}:{password}@{host}/{database}")
+engine = create_engine(dbconfig)
 Base.prepare(engine, reflect=True)
 conn = engine.connect()
 session = Session(bind=engine)
@@ -158,41 +161,41 @@ def get_json(table):
             'index': result.index,
             'type': 'LinkedIn',
             'attributes': {
-                'index': result.index,
-                'avg_n_pos_per_prev_tenure': result.avg_n_pos_per_prev_tenure,
-                'avg_pos_len': result.avg_pos_len,
-                'avg_prev_tenure_len': result.avg_prev_tenure_len,
-                'c_name': result.c_name,
-                'n_pos': result.n_pos,
-                'n_prev_tenures': result.n_prev_tenures,
-                'tenure_len': result.tenure_len,
+                # 'index': result.index,
+                # 'avg_n_pos_per_prev_tenure': result.avg_n_pos_per_prev_tenure,
+                # 'avg_pos_len': result.avg_pos_len,
+                # 'avg_prev_tenure_len': result.avg_prev_tenure_len,
+                # 'c_name': result.c_name,
+                # 'n_pos': result.n_pos,
+                # 'n_prev_tenures': result.n_prev_tenures,
+                # 'tenure_len': result.tenure_len,
                 'age': result.age,
                 'beauty': result.beauty,
-                'blur': result.blur,
-                'emo_anger': result.emo_anger,
-                'emo_disgust': result.emo_disgust,
-                'emo_fear': result.emo_fear,
-                'emo_happiness': result.emo_happiness,
-                'emo_neutral': result.emo_neutral,
-                'emo_sadness': result.emo_sadness,
-                'emo_surprise': result.emo_surprise,
-                'ethnicity': result.ethnicity,
-                'face_quality': result.face_quality,
-                'gender': result.gender,
-                'glass': result.glass,
-                'head_pitch': result.head_pitch,
-                'head_roll': result.head_roll,
-                'head_yaw': result.head_yaw,
-                'mouth_close': result.mouth_close,
-                'mouth_mask': result.mouth_mask,
-                'mouth_open': result.mouth_open,
-                'mouth_other': result.mouth_other,
-                'skin_acne': result.skin_acne,
-                'skin_dark_circle': result.skin_dark_circle,
-                'skin_health': result.skin_health,
-                'skin_stain': result.skin_stain,
+                # 'blur': result.blur,
+                # 'emo_anger': result.emo_anger,
+                # 'emo_disgust': result.emo_disgust,
+                # 'emo_fear': result.emo_fear,
+                # 'emo_happiness': result.emo_happiness,
+                # 'emo_neutral': result.emo_neutral,
+                # 'emo_sadness': result.emo_sadness,
+                # 'emo_surprise': result.emo_surprise,
+                # 'ethnicity': result.ethnicity,
+                # 'face_quality': result.face_quality,
+                # 'gender': result.gender,
+                # 'glass': result.glass,
+                # 'head_pitch': result.head_pitch,
+                # 'head_roll': result.head_roll,
+                # 'head_yaw': result.head_yaw,
+                # 'mouth_close': result.mouth_close,
+                # 'mouth_mask': result.mouth_mask,
+                # 'mouth_open': result.mouth_open,
+                # 'mouth_other': result.mouth_other,
+                # 'skin_acne': result.skin_acne,
+                # 'skin_dark_circle': result.skin_dark_circle,
+                # 'skin_health': result.skin_health,
+                # 'skin_stain': result.skin_stain,
                 'smile': result.smile,
-                'nationality': result.nationality,
+                # 'nationality': result.nationality,
                 'n_followers': result.n_followers,
             }
         } for result in results]
@@ -223,4 +226,4 @@ def get_json(table):
 #################################################
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=True, port=port)
