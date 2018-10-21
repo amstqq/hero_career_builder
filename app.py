@@ -32,7 +32,7 @@ Base = automap_base()
 engine = create_engine(dbconfig, pool_recycle=1)
 Base.prepare(engine, reflect=True)
 # conn = engine.connect()
-session = Session(bind=engine)
+# session = Session(bind=engine)
 
 DataScience = Base.classes.data_science_companies
 OccupationStats = Base.classes.occupation_stats
@@ -92,6 +92,7 @@ def get_json(table):
     success = False
     if table == 'datascience':
         try:
+            session = Session(bind=engine)
             results = session.query(DataScience)
             data = [{
                 'index': result.index,
@@ -105,10 +106,12 @@ def get_json(table):
                     'state': result.state
                 }
             } for result in results]
+            session.close()
         except:
             session.rollback()
     elif table == "commontools":
         try:
+            session = Session(bind=engine)
             results = session.query(CommonTools)
             data = [{
                 'index': result.index,
@@ -119,11 +122,13 @@ def get_json(table):
                     'frequency': result.frequency,
                 }
             } for result in results]
+            session.close()
         except:
             session.rollback()
 
     elif table == "toolspreference":
         try:
+            session = Session(bind=engine)
             results = session.query(ToolsPreference)
             data = [{
                 'index': result.index,
@@ -136,10 +141,12 @@ def get_json(table):
                     'year2015': result.year_2015
                 }
             } for result in results]
+            session.close()
         except:
             session.rollback()
     elif table == "occupationstats":
         try:
+            session = Session(bind=engine)
             results = session.query(OccupationStats)
             data = [{
                 'index': result.index,
@@ -165,79 +172,80 @@ def get_json(table):
                     'A_PCT90': result.A_PCT90
                 }
             } for result in results]
+            session.close()
         except:
             session.rollback()
     elif table == "linkedin":
-        while not success:
-            try:
-                results = session.query(LinkedIn)
-                data = [{
-                    'index': result.index,
-                    'type': 'LinkedIn',
-                    'attributes': {
-                        # 'index': result.index,
-                        # 'avg_n_pos_per_prev_tenure': result.avg_n_pos_per_prev_tenure,
-                        # 'avg_pos_len': result.avg_pos_len,
-                        # 'avg_prev_tenure_len': result.avg_prev_tenure_len,
-                        # 'c_name': result.c_name,
-                        # 'n_pos': result.n_pos,
-                        # 'n_prev_tenures': result.n_prev_tenures,
-                        # 'tenure_len': result.tenure_len,
-                        'age': result.age,
-                        'beauty': result.beauty,
-                        # 'blur': result.blur,
-                        # 'emo_anger': result.emo_anger,
-                        # 'emo_disgust': result.emo_disgust,
-                        # 'emo_fear': result.emo_fear,
-                        # 'emo_happiness': result.emo_happiness,
-                        # 'emo_neutral': result.emo_neutral,
-                        # 'emo_sadness': result.emo_sadness,
-                        # 'emo_surprise': result.emo_surprise,
-                        # 'ethnicity': result.ethnicity,
-                        # 'face_quality': result.face_quality,
-                        # 'gender': result.gender,
-                        # 'glass': result.glass,
-                        # 'head_pitch': result.head_pitch,
-                        # 'head_roll': result.head_roll,
-                        # 'head_yaw': result.head_yaw,
-                        # 'mouth_close': result.mouth_close,
-                        # 'mouth_mask': result.mouth_mask,
-                        # 'mouth_open': result.mouth_open,
-                        # 'mouth_other': result.mouth_other,
-                        # 'skin_acne': result.skin_acne,
-                        # 'skin_dark_circle': result.skin_dark_circle,
-                        # 'skin_health': result.skin_health,
-                        # 'skin_stain': result.skin_stain,
-                        'smile': result.smile,
-                        # 'nationality': result.nationality,
-                        'n_followers': result.n_followers,
-                    }
-                } for result in results]
-                sucess = true
-            except:
-                session.rollback()
+        try:
+            session = Session(bind=engine)
+            results = session.query(LinkedIn)
+            data = [{
+                'index': result.index,
+                'type': 'LinkedIn',
+                'attributes': {
+                    # 'index': result.index,
+                    # 'avg_n_pos_per_prev_tenure': result.avg_n_pos_per_prev_tenure,
+                    # 'avg_pos_len': result.avg_pos_len,
+                    # 'avg_prev_tenure_len': result.avg_prev_tenure_len,
+                    # 'c_name': result.c_name,
+                    # 'n_pos': result.n_pos,
+                    # 'n_prev_tenures': result.n_prev_tenures,
+                    # 'tenure_len': result.tenure_len,
+                    'age': result.age,
+                    'beauty': result.beauty,
+                    # 'blur': result.blur,
+                    # 'emo_anger': result.emo_anger,
+                    # 'emo_disgust': result.emo_disgust,
+                    # 'emo_fear': result.emo_fear,
+                    # 'emo_happiness': result.emo_happiness,
+                    # 'emo_neutral': result.emo_neutral,
+                    # 'emo_sadness': result.emo_sadness,
+                    # 'emo_surprise': result.emo_surprise,
+                    # 'ethnicity': result.ethnicity,
+                    # 'face_quality': result.face_quality,
+                    # 'gender': result.gender,
+                    # 'glass': result.glass,
+                    # 'head_pitch': result.head_pitch,
+                    # 'head_roll': result.head_roll,
+                    # 'head_yaw': result.head_yaw,
+                    # 'mouth_close': result.mouth_close,
+                    # 'mouth_mask': result.mouth_mask,
+                    # 'mouth_open': result.mouth_open,
+                    # 'mouth_other': result.mouth_other,
+                    # 'skin_acne': result.skin_acne,
+                    # 'skin_dark_circle': result.skin_dark_circle,
+                    # 'skin_health': result.skin_health,
+                    # 'skin_stain': result.skin_stain,
+                    'smile': result.smile,
+                    # 'nationality': result.nationality,
+                    'n_followers': result.n_followers,
+                }
+            } for result in results]
+            session.close()
+        except:
+            session.rollback()
     elif table == "numbystate":
-        while not success:
-            try:
-                data = [
+        try:
+            session = Session(bind=engine)
+            data = [
+                {
+                    'state': s.state,
+                    'attributes':
                     {
-                        'state': s.state,
-                        'attributes':
-                        {
-                            'totalPositions': s.position,
-                            'totalCompanies': s.company,
-                            'companies': [
-                                {
-                                    'name': c.company,
-                                    'pos': c.position,
-                                } for c in session.query(numByCompany.company, numByCompany.position).filter_by(state=s.state).order_by(desc(numByCompany.position))
-                            ],
-                        },
-                    } for s in session.query(numByState).order_by(desc(numByState.position))
-                ]
-                success = True
-            except:
-                session.rollback()
+                        'totalPositions': s.position,
+                        'totalCompanies': s.company,
+                        'companies': [
+                            {
+                                'name': c.company,
+                                'pos': c.position,
+                            } for c in session.query(numByCompany.company, numByCompany.position).filter_by(state=s.state).order_by(desc(numByCompany.position))
+                        ],
+                    },
+                } for s in session.query(numByState).order_by(desc(numByState.position))
+            ]
+            session.close()
+        except:
+            session.rollback()
     else:
         return "Cannot find data table", 404
     return jsonify(data)
