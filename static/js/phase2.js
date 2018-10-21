@@ -111,12 +111,12 @@ function renderBarChart2(x_values, y1, barname, state) {
             l: 50,
             r: 150
         },
-        autosize: false,
-        height:600,
-        width:950
+        autosize: true,
+        // height:600,
+        // width:1050
     };
 
-    Plotly.newPlot(barname, data, layout);
+    Plotly.newPlot(barname, data, layout, {responsive: true});
 }
 
 initial(states[0]);

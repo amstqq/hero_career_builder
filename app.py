@@ -1,5 +1,4 @@
 import os
-# from config import *
 
 import pandas as pd
 import numpy as np
@@ -31,8 +30,6 @@ Base = automap_base()
 # engine = create_engine(f"mysql://{username}:{password}@{host}/{database}")
 engine = create_engine(dbconfig, pool_recycle=1)
 Base.prepare(engine, reflect=True)
-# conn = engine.connect()
-# session = Session(bind=engine)
 
 DataScience = Base.classes.data_science_companies
 OccupationStats = Base.classes.occupation_stats
@@ -256,4 +253,4 @@ def get_json(table):
 #################################################
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=True, host="0.0.0.0", port=port)
