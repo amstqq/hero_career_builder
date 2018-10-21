@@ -89,6 +89,7 @@ def phase4():
 
 @app.route("/api/<table>", methods=['GET'])
 def get_json(table):
+    success = False
     if table == 'datascience':
         try:
             results = session.query(DataScience)
@@ -214,25 +215,27 @@ def get_json(table):
         except:
             session.rollback()
     elif table == "numbystate":
-        try:
-            data = [
-                {
-                    'state': s.state,
-                    'attributes':
+        while not success:
+            try:
+                data = [
                     {
-                        'totalPositions': s.position,
-                        'totalCompanies': s.company,
-                        'companies': [
-                            {
-                                'name': c.company,
-                                'pos': c.position,
-                            } for c in session.query(numByCompany.company, numByCompany.position).filter_by(state=s.state).order_by(desc(numByCompany.position))
-                        ],
-                    },
-                } for s in session.query(numByState).order_by(desc(numByState.position))
-            ]
-        except:
-            session.rollback()
+                        'state': s.state,
+                        'attributes':
+                        {
+                            'totalPositions': s.position,
+                            'totalCompanies': s.company,
+                            'companies': [
+                                {
+                                    'name': c.company,
+                                    'pos': c.position,
+                                } for c in session.query(numByCompany.company, numByCompany.position).filter_by(state=s.state).order_by(desc(numByCompany.position))
+                            ],
+                        },
+                    } for s in session.query(numByState).order_by(desc(numByState.position))
+                ]
+            success = True
+            except:
+                session.rollback()
     else:
         return "Cannot find data table", 404
     return jsonify(data)
