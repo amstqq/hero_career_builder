@@ -1,5 +1,7 @@
 import os
+import os.path
 
+from dotenv import load_dotenv
 import pandas as pd
 import numpy as np
 
@@ -16,11 +18,12 @@ from flask import Flask, jsonify, request, make_response, url_for, render_templa
 from flask_sqlalchemy import SQLAlchemy
 pymysql.install_as_MySQLdb()
 
+load_dotenv()
+
 dbconfig = os.environ.get('CLEARDB_DATABASE_URL',None)
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
-
 
 #################################################
 # Database Setup
@@ -253,4 +256,4 @@ def get_json(table):
 #################################################
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=True, port=port)
